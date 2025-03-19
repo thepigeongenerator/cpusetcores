@@ -1,0 +1,8 @@
+.*
+
+/bin/
+/obj/
+/compile_commands.json
+
+!.editorconfig
+!.gitignore
