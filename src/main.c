@@ -19,12 +19,21 @@ static inline bool cpu_setter(uint32_t id, bool nstate, uint8_t opts) {
 	return false;
 }
 
+static inline void print_cpu_count(int32_t mcpus) {
+	printf("%i/%i cpus enabled.\n", get_nprocs(), mcpus); // get the number of available processors
+}
+
 int32_t main(int32_t argc, char** argv) {
 	if (geteuid() != 0) fatal("must be executed as the root user!");
 
 	int32_t ncpus;                                 // the number of CPUs to activate
 	uint8_t opts = getoptions(argc, argv, &ncpus); // the options to use
 	int32_t mcpus = get_nprocs_conf();             // the max number of CPUs that are available
+
+	if (opts & OPT_LIST_CORES && ncpus < 0) {
+		print_cpu_count(mcpus);
+		return 0;
+	}
 
 	if (opts & OPT_INVERT)
 		ncpus = mcpus - ncpus;
@@ -48,7 +57,7 @@ int32_t main(int32_t argc, char** argv) {
 	}
 
 	if ((opts & OPT_LIST_CORES) || (opts & OPT_VERBOSE))
-		printf("%i/%i cpus enabled\n", ncpus, mcpus);
+		print_cpu_count(mcpus);
 
 	return 0;
 }
