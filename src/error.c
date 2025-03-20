@@ -14,5 +14,5 @@ noreturn void fatal(char const* fmt, ...) {
 	va_end(args);
 
 	fprintf(stderr, "\033[91mE: %s\033[0m\n", buf);
-	abort();
+	exit(1);
 }
