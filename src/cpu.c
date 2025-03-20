@@ -23,7 +23,7 @@ bool getcpu(uint32_t id) {
 	fclose(f);
 
 	// return whether state is truthy
-	return !!state;
+	return !!(state - 0x30);
 }
 
 void setcpu(uint32_t id, bool state) {
