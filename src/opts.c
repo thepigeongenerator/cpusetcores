@@ -37,7 +37,10 @@ uint8_t getoptions(int32_t argc, char* const* argv, int32_t* ncpus) {
 	if (optind < argc) {
 		char* num = argv[optind];
 		*ncpus = atoi(num);
-	} else fatal("you must provide a number!");
+	} else if (opts & OPT_LIST_CORES) {
+		*ncpus = -1;
+	} else
+		fatal("must execute with either a number or [-l]");
 
 	return opts;
 }
