@@ -7,7 +7,7 @@
 
 char const* const cpu_path = "/sys/devices/system/cpu/cpu%i/online";
 
-bool getcore(uint32_t id) {
+bool getcpu(uint32_t id) {
 	// get the file path
 	char path[64];                    // contains the file path (max length is 64 due to the path and a bunch of extra wiggle room)
 	snprintf(path, 64, cpu_path, id); // writes the path using the id
@@ -26,7 +26,7 @@ bool getcore(uint32_t id) {
 	return !!state;
 }
 
-void setcore(uint32_t id, bool state) {
+void setcpu(uint32_t id, bool state) {
 	char path[64];
 	snprintf(path, 64, cpu_path, id);
 
