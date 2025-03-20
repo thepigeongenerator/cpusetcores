@@ -56,7 +56,7 @@ int32_t main(int32_t argc, char** argv) {
 			break; // break if OPT_SET_ALL is not set (assuming the rest of the CPUs are already off)
 	}
 
-	if ((opts & OPT_LIST_CORES) || (opts & OPT_VERBOSE))
+	if ((opts & OPT_LIST_CORES))
 		print_cpu_count(mcpus);
 
 	return 0;

@@ -23,7 +23,7 @@ uint8_t getoptions(int32_t argc, char* const* argv, int32_t* ncpus) {
 			break;
 		case 'v':
 			if (opts & OPT_VERBOSE) fatal(msg, 'v');
-			opts |= OPT_VERBOSE;
+			opts |= OPT_VERBOSE | OPT_LIST_CORES;
 			break;
 		case 'i':
 			if (opts & OPT_INVERT) fatal(msg, 'i');
