@@ -50,10 +50,14 @@ int32_t main(int32_t argc, char** argv) {
 			continue;
 		}
 
-		if (cpu_setter(id, false, opts) && (opts & OPT_VERBOSE))
+		if (cpu_setter(id, false, opts) && (opts & OPT_VERBOSE)) {
 			printf(cpu_set_log, id, 0);
-		else if (!(opts & OPT_SET_ALL))
-			break; // break if OPT_SET_ALL is not set (assuming the rest of the CPUs are already off)
+			continue;
+		}
+
+		// break if OPT_SET_ALL is not set (assuming the rest of the CPUs are already off)
+		if (!(opts & OPT_SET_ALL))
+			break;
 	}
 
 	if ((opts & OPT_LIST_CORES))
