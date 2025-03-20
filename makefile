@@ -29,7 +29,7 @@ SRC := $(wildcard src/*.c) $(wildcard src/**/*.c) $(wildcard src/**/**/*.c) $(wi
 # output locations
 OBJ := $(patsubst src/%,$(DIR_OBJ)/$(PROF)/%,$(SRC:.c=.o))
 DEP := $(OBJ:.o=.d)
-TARGET := $(DIR_BUILD)/$(NAME)$(EXT)
+TARGET := $(DIR_BUILD)/$(NAME)
 
 define wr_colour
 	@echo -e "\033[$(2)m$(1)\033[0m"
