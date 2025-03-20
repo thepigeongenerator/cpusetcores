@@ -44,12 +44,15 @@ int32_t main(int32_t argc, char** argv) {
 
 	char const* const cpu_set_log = "set cpu %i to %hi\n";
 	for (int32_t id = 1; id < mcpus; id++) { // start at CPU 1, as CPU 0 is not writeable
+		// whilst the id is less then the amount of cpus to enable
 		if (id < ncpus) {
+			// enable the cpu & print if it was actually set (if -v was given)
 			if (cpu_setter(id, true, opts) && (opts & OPT_VERBOSE))
 				printf(cpu_set_log, id, 1);
 			continue;
 		}
 
+		// disable the cpu & print if it was actually set (if -v was given)
 		if (cpu_setter(id, false, opts) && (opts & OPT_VERBOSE)) {
 			printf(cpu_set_log, id, 0);
 			continue;
