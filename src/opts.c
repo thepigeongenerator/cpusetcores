@@ -10,23 +10,22 @@ uint8_t getoptions(int32_t argc, char *const *argv, int32_t *ncpus) {
 	uint8_t opts = 0;
 	char opt;
 
-	const char *const msg = "-%c has already been set";
 	while ((opt = getopt(argc, argv, "lavi")) != -1) {
 		switch (opt) {
 		case 'l':
-			if (opts & OPT_LIST_CORES) fatal(msg, 'l');
+			if (opts & OPT_LIST_CORES) fatal("-%c has already been set", 'l');
 			opts |= OPT_LIST_CORES;
 			break;
 		case 'a':
-			if (opts & OPT_SET_ALL) fatal(msg, 'a');
+			if (opts & OPT_SET_ALL) fatal("-%c has already been set", 'a');
 			opts |= OPT_SET_ALL;
 			break;
 		case 'v':
-			if (opts & OPT_VERBOSE) fatal(msg, 'v');
+			if (opts & OPT_VERBOSE) fatal("-%c has already been set", 'v');
 			opts |= OPT_VERBOSE | OPT_LIST_CORES;
 			break;
 		case 'i':
-			if (opts & OPT_INVERT) fatal(msg, 'i');
+			if (opts & OPT_INVERT) fatal("-%c has already been set", 'i');
 			opts |= OPT_INVERT;
 			break;
 		case '?':
