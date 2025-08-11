@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-char const* const cpu_path = "/sys/devices/system/cpu/cpu%i/online";
+const char *const cpu_path = "/sys/devices/system/cpu/cpu%i/online";
 
 bool getcpu(uint32_t id) {
 	// get the file path
@@ -18,7 +18,7 @@ bool getcpu(uint32_t id) {
 
 	// read a character from the file, store in state
 	char state = '\0';
-	FILE* f = fopen(path, "r");
+	FILE *f = fopen(path, "r");
 	fread(&state, 1, 1, f);
 	fclose(f);
 
@@ -33,7 +33,7 @@ void setcpu(uint32_t id, bool state) {
 	char s = 0x30 + (char)state; // convert the state to a character
 
 	// write the state to the file (creates file if it doesn't exist)
-	FILE* f = fopen(path, "w");
+	FILE *f = fopen(path, "w");
 	fwrite(&s, 1, 1, f);
 	fclose(f);
 }

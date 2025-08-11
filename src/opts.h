@@ -8,4 +8,4 @@ enum opt {
 	OPT_INVERT = 8,     // 'num' now represents the amount of cores to disable
 };
 
-uint8_t getoptions(int32_t, char* const*, int32_t*);
+uint8_t getoptions(int32_t, char *const *, int32_t *);

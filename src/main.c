@@ -23,7 +23,7 @@ static inline void print_cpu_count(int32_t mcpus) {
 	printf("%i/%i cpus enabled.\n", get_nprocs(), mcpus); // get the number of available processors
 }
 
-int32_t main(int32_t argc, char** argv) {
+int32_t main(int32_t argc, char **argv) {
 	if (geteuid() != 0) fatal("must be executed as the root user!");
 
 	int32_t ncpus;                                 // the number of CPUs to activate
@@ -42,7 +42,7 @@ int32_t main(int32_t argc, char** argv) {
 	if (ncpus > mcpus) fatal("%i exeeds the maximum numbers of cpus available (%i)", ncpus, mcpus);
 	if (ncpus < 1) fatal("may not keep less than 1 cpu enabled, requested to enable %i", ncpus);
 
-	char const* const cpu_set_log = "set cpu %i to %hi\n";
+	const char *const cpu_set_log = "set cpu %i to %hi\n";
 	for (int32_t id = 1; id < mcpus; id++) { // start at CPU 1, as CPU 0 is not writeable
 		// whilst the id is less then the amount of cpus to enable
 		if (id < ncpus) {

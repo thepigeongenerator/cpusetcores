@@ -6,11 +6,11 @@
 
 #include "error.h"
 
-uint8_t getoptions(int32_t argc, char* const* argv, int32_t* ncpus) {
+uint8_t getoptions(int32_t argc, char *const *argv, int32_t *ncpus) {
 	uint8_t opts = 0;
 	char opt;
 
-	char const* const msg = "-%c has already been set";
+	const char *const msg = "-%c has already been set";
 	while ((opt = getopt(argc, argv, "lavi")) != -1) {
 		switch (opt) {
 		case 'l':
@@ -35,7 +35,7 @@ uint8_t getoptions(int32_t argc, char* const* argv, int32_t* ncpus) {
 	}
 
 	if (optind < argc) {
-		char* num = argv[optind];
+		char *num = argv[optind];
 		*ncpus = atoi(num);
 	} else if (opts & OPT_LIST_CORES) {
 		*ncpus = -1;

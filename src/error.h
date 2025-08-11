@@ -4,4 +4,4 @@
 #include <stdnoreturn.h>
 
 // prints an error message and aborts execution
-noreturn void fatal(char const*, ...);
+noreturn void fatal(const char *, ...);

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdnoreturn.h>
 
-noreturn void fatal(char const* fmt, ...) {
+noreturn void fatal(const char *fmt, ...) {
 	char buf[128];
 	va_list args;
 	va_start(args, fmt);
