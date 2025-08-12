@@ -1,6 +1,10 @@
 #pragma once
-#include <stdbool.h>
-#include <stdint.h>
+#include "util/intdef.h"
 
-bool getcpu(uint32_t);       // gets the state of core (id)
-void setcpu(uint32_t, bool); // sets the state of core (id)
+/* gets the current state of a CPU thread,
+ * returns a boolean value (`1` for enabled, `0` for disabled) */
+int cpu_getenabled(uint id);
+
+/* sets the current state of a CPU thread.
+ * returns `0` upon success, `1` upon failure */
+int cpu_setenabled(uint id, int state);

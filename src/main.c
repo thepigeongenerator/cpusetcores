@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/sysinfo.h>
@@ -10,10 +11,10 @@
 static inline bool cpu_setter(uint32_t id, bool nstate, uint8_t opts) {
 	bool cstate = !nstate;
 	if (!(opts & OPT_SET_ALL))
-		cstate = getcpu(id);
+		cstate = cpu_getenabled(id);
 
 	if (cstate != nstate) {
-		setcpu(id, nstate);
+		cpu_setenabled(id, nstate);
 		return true;
 	}
 	return false;
