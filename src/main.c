@@ -8,28 +8,25 @@
 #include "error.h"
 #include "opts.h"
 
-static inline bool cpu_setter(uint32_t id, bool nstate, uint8_t opts) {
-	bool cstate = !nstate;
-	if (!(opts & OPT_SET_ALL))
-		cstate = cpu_getenabled(id);
-
-	if (cstate != nstate) {
-		cpu_setenabled(id, nstate);
-		return true;
-	}
-	return false;
+/* sets CPU `id` to `nstate`, if it hasn't been set yet.
+ * If `opt` contains `OPT_SET_ALL`, this check is ignored.
+ * Returns `0` upon success, `1` upon failure. */
+static int setcpu(uint id, int nstate, u8 opts) {
+	bool nsetall = !(opts & OPT_SET_ALL);                               // if SET_ALL has not been set
+	int cstate = nsetall && cpu_getenabled(id);                         // get state if nsetall=1
+	return (nsetall && cstate == nstate) || cpu_setenabled(id, nstate); // set if cstate matches nstate, unless nsetall=1
 }
 
-static inline void print_cpu_count(int32_t mcpus) {
+static inline void print_cpu_count(uint mcpus) {
 	printf("%i/%i cpus enabled.\n", get_nprocs(), mcpus); // get the number of available processors
 }
 
-int32_t main(int32_t argc, char **argv) {
+int main(int argc, char **argv) {
 	if (geteuid() != 0) fatal("must be executed as the root user!");
 
-	int32_t ncpus;                                 // the number of CPUs to activate
-	uint8_t opts = getoptions(argc, argv, &ncpus); // the options to use
-	int32_t mcpus = get_nprocs_conf();             // the max number of CPUs that are available
+	int mcpus, ncpus;                         // the number of CPUs to activate
+	u8 opts = getoptions(argc, argv, &ncpus); // the options to use
+	mcpus = get_nprocs_conf();                // the max number of CPUs that are available
 
 	if (opts & OPT_LIST_CORES && ncpus < 0) {
 		print_cpu_count(mcpus);
@@ -44,17 +41,17 @@ int32_t main(int32_t argc, char **argv) {
 	if (ncpus < 1) fatal("may not keep less than 1 cpu enabled, requested to enable %i", ncpus);
 
 	const char *const cpu_set_log = "set cpu %i to %hi\n";
-	for (int32_t id = 1; id < mcpus; id++) { // start at CPU 1, as CPU 0 is not writeable
+	for (int id = 1; id < mcpus; id++) { // start at CPU 1, as CPU 0 is not writeable
 		// whilst the id is less then the amount of cpus to enable
 		if (id < ncpus) {
 			// enable the cpu & print if it was actually set (if -v was given)
-			if (cpu_setter(id, true, opts) && (opts & OPT_VERBOSE))
+			if (!setcpu(id, true, opts) && (opts & OPT_VERBOSE))
 				printf(cpu_set_log, id, 1);
 			continue;
 		}
 
 		// disable the cpu & print if it was actually set (if -v was given)
-		if (cpu_setter(id, false, opts) && (opts & OPT_VERBOSE)) {
+		if (!setcpu(id, false, opts) && (opts & OPT_VERBOSE)) {
 			printf(cpu_set_log, id, 0);
 			continue;
 		}
