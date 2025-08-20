@@ -10,4 +10,7 @@ enum opt {
 	OPT_INVERT = 8,     // 'num' now represents the amount of cores to disable
 };
 
+/* acquires the options given by the user through arguments.
+ * returns the bitmap of these options.
+ * `ncpus` is set to `-1`, or the amount of CPUs that the user requested to enable.*/
 u8 getoptions(int argc, char *const *argv, int *ncpus);
