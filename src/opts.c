@@ -1,5 +1,6 @@
 #include "opts.h"
 
+#include <errno.h>
 #include <getopt.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -36,8 +37,11 @@ u8 getoptions(int argc, char *const *argv, int *ncpus) {
 	}
 
 	if (optind < argc) {
+		char *end;
 		char *num = argv[optind];
-		*ncpus = atoi(num);
+		*ncpus = strtol(num, &end, 0);
+		if (errno || end == num || *end != '\0')
+			fatal("failed to parse numeric value from string '%s'", num);
 	} else if (opts & OPT_LIST_CORES) {
 		*ncpus = -1;
 	} else
