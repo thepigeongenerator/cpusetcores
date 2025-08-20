@@ -5,8 +5,9 @@
 #include <stdlib.h>
 
 #include "error.h"
+#include "util/intdef.h"
 
-uint8_t getoptions(int32_t argc, char *const *argv, int32_t *ncpus) {
+u8 getoptions(int argc, char *const *argv, int *ncpus) {
 	uint8_t opts = 0;
 	char opt;
 

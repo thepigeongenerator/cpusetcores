@@ -1,6 +1,8 @@
 #pragma once
 #include <stdint.h>
 
+#include "util/intdef.h"
+
 enum opt {
 	OPT_LIST_CORES = 1, // option that lists the total amount of cores that are set
 	OPT_SET_ALL = 2,    // option to set all cores, regardless of their assumed state
@@ -8,4 +10,4 @@ enum opt {
 	OPT_INVERT = 8,     // 'num' now represents the amount of cores to disable
 };
 
-uint8_t getoptions(int32_t, char *const *, int32_t *);
+u8 getoptions(int argc, char *const *argv, int *ncpus);
