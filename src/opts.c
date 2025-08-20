@@ -9,6 +9,7 @@
 #include "util/intdef.h"
 
 u8 getoptions(int argc, char *const *argv, int *ncpus) {
+	*ncpus = -1;
 	uint8_t opts = 0;
 	char opt;
 
@@ -42,9 +43,7 @@ u8 getoptions(int argc, char *const *argv, int *ncpus) {
 		*ncpus = strtol(num, &end, 0);
 		if (errno || end == num || *end != '\0')
 			fatal("failed to parse numeric value from string '%s'", num);
-	} else if (opts & OPT_LIST_CORES) {
-		*ncpus = -1;
-	} else
+	} else if (!(opts & OPT_LIST_CORES))
 		fatal("must execute with either a number or [-l]");
 
 	return opts;
