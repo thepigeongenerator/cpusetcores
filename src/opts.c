@@ -12,22 +12,10 @@ uint8_t getoptions(int32_t argc, char *const *argv, int32_t *ncpus) {
 
 	while ((opt = getopt(argc, argv, "lavih")) != -1) {
 		switch (opt) {
-		case 'l':
-			if (opts & OPT_LIST_CORES) fatal("-%c has already been set", 'l');
-			opts |= OPT_LIST_CORES;
-			break;
-		case 'a':
-			if (opts & OPT_SET_ALL) fatal("-%c has already been set", 'a');
-			opts |= OPT_SET_ALL;
-			break;
-		case 'v':
-			if (opts & OPT_VERBOSE) fatal("-%c has already been set", 'v');
-			opts |= OPT_VERBOSE | OPT_LIST_CORES;
-			break;
-		case 'i':
-			if (opts & OPT_INVERT) fatal("-%c has already been set", 'i');
-			opts |= OPT_INVERT;
-			break;
+		case 'l': opts |= OPT_LIST_CORES; break;
+		case 'a': opts |= OPT_SET_ALL; break;
+		case 'v': opts |= OPT_VERBOSE | OPT_LIST_CORES; break;
+		case 'i': opts |= OPT_INVERT; break;
 		case '?':
 			printf("specify -h for help\n");
 			exit(EXIT_FAILURE);
